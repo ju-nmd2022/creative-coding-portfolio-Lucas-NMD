@@ -1,13 +1,14 @@
-function setup() {
-    createCanvas(500, 500);
-  }
-  
   const size = 100;
   const layers = 4;
   const rows = 3;
   const cols = 2;
   const spacingX = width / (cols + 2);
   const spacingY = height / (rows + 2);
+  
+  function setup() {
+    createCanvas(innerWidth, innerHeight);
+    background(234, 234, 45);
+  }
   
   function getRandomValue(pos, variance) {
     return pos + map(Math.random(), 0, 1, -variance, variance);
@@ -58,6 +59,5 @@ function setup() {
       }
     }
   
-    noLoop();
   }
   /* Adapted from molnar example. */
