@@ -59,7 +59,7 @@ function goToExperiment(index) {
   p5container.appendChild(iframe);
 
   nameText.innerText = experiment.name;
-  descriptionText.innerText = experiment.description;
+  descriptionText.innerHTML = experiment.description;
 }
 
 nextButton.addEventListener("click", () => {
