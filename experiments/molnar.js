@@ -60,4 +60,4 @@ function setup() {
   
     noLoop();
   }
-  /* Adapted from Garrit's molnar example. */
+  /* Adapted from molnar example. */
