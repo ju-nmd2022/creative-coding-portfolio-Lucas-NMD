@@ -11,18 +11,18 @@ function setup() {
   spacingX = width / (cols + 2);
   spacingY = height / (rows + 2);
   noStroke();
-  fill(0);
+  fill(random(255),random(255),random(255));
 }
 
 function drawNoiseEllipse(x, y, noiseScale) {
   const noiseValue = noise(x * noiseScale, y * noiseScale);
-  const size = 4 + noiseValue * 8;
+  const size = 2 + noiseValue * 12;
   ellipse(x, y, size);
 }
 
 function drawLayers(x, y, size, layers) {
-  const variance = size / 3;
-  const noiseScale = 0.5;
+  const variance = size / 7;
+  const noiseScale = 0.1;
   const stepSize = 9; 
   for (let i = 0; i < layers; i++) {
     const s = (size / layers) * i;
@@ -49,5 +49,4 @@ function draw() {
       drawLayers(x, y, size, layers);
     }
   }
-  noLoop();
 }
