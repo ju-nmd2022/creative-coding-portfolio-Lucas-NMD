@@ -12,6 +12,6 @@
   {
     "file": "experiments/molnar3.js",
     "name": "Molnar V3",
-    "description": "This is an interpretation of the work behind Vera Molnar in this <a href='https://artlogic-res.cloudinary.com/w_2000,h_2000,c_limit,f_auto,fl_lossy,q_auto:good/ws-ropac/usr/images/news/main_image/items/23/238df99be2584163be0d311f69f1d733/vera-molnar-1961-courtesy-of-galerie-oniris-rennes.jpeg'>picture</a> using Perlin noise and size variation."
+    "description": "This is an interpretation of the work behind Vera Molnar in this <a href='https://artlogic-res.cloudinary.com/w_2000,h_2000,c_limit,f_auto,fl_lossy,q_auto:good/ws-ropac/usr/images/news/main_image/items/23/238df99be2584163be0d311f69f1d733/vera-molnar-1961-courtesy-of-galerie-oniris-rennes.jpeg'>picture</a> using Perlin noise and random color variation."
   }
 ]
