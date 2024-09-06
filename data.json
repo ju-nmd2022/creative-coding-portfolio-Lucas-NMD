@@ -23,5 +23,10 @@
     "file": "experiments/nees2.js",
     "name": "Nees V2",
     "description": "Recreation of Nees Gravel with color variation"
+  },
+  {
+    "file": "experiments/nees3.js",
+    "name": "Nees V3",
+    "description": "Recreation of Nees Gravel with varying grid size and random shapes"
   }
 ]
