@@ -14,11 +14,11 @@ class Cell {
 
   getRandomColor() {
     const colors = [
-      color(255, 255, 255),
-      color(255, 0, 0),
-      color(0, 0, 255),
-      color(255, 255, 0),
-      color(0, 0, 0) 
+      color(255, 255, 255),  
+      color(255, 0, 0),      
+      color(0, 0, 255),      
+      color(255, 255, 0),    
+      color(0, 0, 0)         
     ];
     return colors[Math.floor(random(colors.length))];
   }
@@ -79,6 +79,7 @@ function draw() {
   for (let i = 0; i < board.length; i++) {
     for (let j = 0; j < board[i].length; j++) {
       board[i][j].state = board[i][j].newState;
+      board[i][j].color = board[i][j].getRandomColor();
     }
   }
 }
@@ -104,7 +105,6 @@ function calculateNewState(x, y) {
   } else {  
     if (liveNeighbors === 3) {
       board[x][y].newState = 1;  
-      board[x][y].color = board[x][y].getRandomColor();  
     } else {
       board[x][y].newState = 0;  
     }
