@@ -1,6 +1,7 @@
 function setup() {
   createCanvas(800, 800);
   frameRate(5);
+  setupGrid();
 }
 
 class Cell {
@@ -120,5 +121,3 @@ function mousePressed() {
     redraw(); 
   }
 }
-
-setupGrid();
