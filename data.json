@@ -28,5 +28,10 @@
     "file": "experiments/nees3.js",
     "name": "Nees V3",
     "description": "Recreation of Nees Gravel with varying grid size and random shapes"
+  },
+  {
+    "file": "experiments/automata.js",
+    "name": "Mondrian V1",
+    "description": "Mondrian inspired game of life with user interaction"
   }
 ]
