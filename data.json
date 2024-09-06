@@ -33,5 +33,15 @@
     "file": "experiments/automata.js",
     "name": "Mondrian V1",
     "description": "Mondrian inspired game of life with user interaction"
+  },
+  {
+    "file": "experiments/automata2.js",
+    "name": "Mondrian V2",
+    "description": "Mondrian inspired game of life with dynamic flow field"
+  },
+  {
+    "file": "experiments/automata3.js",
+    "name": "Mondrian V3",
+    "description": "Mondrian inspired particle system"
   }
 ]
