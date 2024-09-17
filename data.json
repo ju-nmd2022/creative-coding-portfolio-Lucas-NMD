@@ -43,5 +43,20 @@
     "file": "experiments/automata3.js",
     "name": "Mondrian V3",
     "description": "Mondrian inspired particle system"
+  },
+  {
+    "file": "experiments/elements.js",
+    "name": "Elements V1",
+    "description": "Elemental particle system depicting fire"
+  },
+  {
+    "file": "experiments/elements2.js",
+    "name": "Elements V2",
+    "description": "Elemental particle system depicting rain"
+  },
+  {
+    "file": "experiments/nees4.js",
+    "name": "Nees V4",
+    "description": "Recreation of Nees Sculpture 1969 using WebGL"
   }
 ]
