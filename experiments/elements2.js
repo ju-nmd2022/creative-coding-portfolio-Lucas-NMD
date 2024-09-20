@@ -3,8 +3,8 @@ let backgroundImage;
 let raindropTexture;
 
 function preload() {
-  backgroundImage = loadImage('pexels-gabriela-palai-129458-395196.jpg');
-  raindropTexture = loadImage('pngwing.com.png');  
+  backgroundImage = loadImage('https://ju-nmd2022.github.io/creative-coding-portfolio-Lucas-NMD/experiments/pexels-gabriela-palai-129458-395196.jpg');
+  raindropTexture = loadImage('https://ju-nmd2022.github.io/creative-coding-portfolio-Lucas-NMD/experiments/pngwing.com.png');  
 }
 
 function setup() {

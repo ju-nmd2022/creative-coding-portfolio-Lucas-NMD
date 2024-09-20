@@ -2,7 +2,7 @@ let particles = [];
 let fireTexture;
 
 function preload() {
-  fireTexture = loadImage('pngegg.png');
+  fireTexture = loadImage('https://ju-nmd2022.github.io/creative-coding-portfolio-Lucas-NMD/experiments/pngegg.png');
   blendMode(ADD);
 }
 
