@@ -58,5 +58,10 @@
     "file": "experiments/nees4.js",
     "name": "Nees V4",
     "description": "Recreation of Nees Sculpture 1969 using WebGL"
+  },
+  {
+    "file": "experiments/music.js",
+    "name": "Tone",
+    "description": "Tone.js music experiment"
   }
 ]
