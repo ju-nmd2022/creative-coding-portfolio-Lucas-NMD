@@ -1,43 +1,65 @@
-let player;
-let oscillator;
-let analyser;
-let mic;
-let buffer1 = new Tone.Buffer(url1)
-
+let synth, analyser;
+let isPlaying = false;
+let notes = ["C4", "E4", "G4", "C5", "E5","G4", "C5", "E5"];
+let durations = ["8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n"];
+let currentNote = 0;
 window.addEventListener("load", () => {
-  player = new Tone.Player("assets/Fugue in C major, BWV846.mp3");
-  oscillator = new Tone.Oscillator(440, "sine").toDestination();
+  setupAudio();
+});
 
+async function setupAudio() {
+  synth = new Tone.Synth().toDestination();
   analyser = new Tone.Analyser("fft", 4096);
-  
-  mic = new Tone.UserMedia();
 
-  oscillator.connect(analyser);
-  oscillator.toDestination();
-  player.connect(analyser);
-  player.toDestination();
-  mic.connect(analyser);
-});
+  synth.connect(analyser);
 
-window.addEventListener("click", () => {
-  player.start();
-  oscillator.start();
-  mic.open();
-});
-
-function setup() {
-  createCanvas(innerWidth, innerHeight);
+  await Tone.start();
+  console.log("Tone.js started!");
 }
 
-function draw() {
-  background(255, 255, 255);
-  let value = analyser.getValue();
-  for (let i = 0; i < value.length; i++) {
-    let v = map(value[i], -100, 0, height, 0);
-    rect(i * 1, 0, 1, v); // waveform: * 100
+window.addEventListener("click", async () => {
+  if (!isPlaying) {
+    isPlaying = true;
+    playNextNote();
+  } else {
+    isPlaying = false;
+    currentNote = 0;
+  }
+});
+
+function playNextNote() {
+  if (isPlaying && currentNote < notes.length) {
+    let note = notes[currentNote];
+    let duration = durations[currentNote];
+
+    synth.triggerAttackRelease(note, duration);
+
+    currentNote++; 
+
+    setTimeout(playNextNote, Tone.Time(duration).toMilliseconds()); 
+  } else if (currentNote >= notes.length) {
+    currentNote = 0; 
+    isPlaying = false;
   }
 }
 
-/*
-array of amplitudes and each element of the array basically represents a range of frequencies. The size of each range is defined by the sample rate divided by the number of FFT points, 64 in your case. So if your sample rate was 48000 and your FFT size is 64 then each element covers a range of 48000/64 = 750 Hz. That means frequencyData[0] are the frequencies 0Hz-750Hz, frequencyData[1] is 750Hz-1500Hz, and so on. In this example the presence of a 1kHz tone would be seen as a peak in the first bin. Also, with such a small FFT you probably noticed that the resolution is very coarse. If you want to increase the frequency resolution you'll need to do a larger FFT.
-*/
+function setup() {
+  createCanvas(window.innerWidth, window.innerHeight);
+  noStroke();
+}
+
+function draw() {
+  background(255);
+
+  let value = analyser.getValue();
+
+  for (let i = 0; i < value.length; i++) {
+    let amplitude = map(value[i], -100, 0, height, 0);
+    fill(map(i, 0, value.length, 0, 255), 100, 150);
+    rect(i * (width / value.length), height - amplitude, (width / value.length), amplitude);
+  }
+}
+
+function windowResized() {
+  resizeCanvas(window.innerWidth, window.innerHeight);
+}
