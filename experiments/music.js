@@ -1,14 +1,14 @@
 let synth, analyser;
 let isPlaying = false;
-let notes = ["C4", "E4", "G4", "C5", "E5","G4", "C5", "E5"];
-let durations = ["8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n"];
+let notes = ["C4", "E4", "G4", "C5", "E5","G4", "C5", "E5","C4", "E4", "G4", "C5", "E5","G4", "C5", "E5"];
+let durations = ["8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n","8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n"];
 let currentNote = 0;
 window.addEventListener("load", () => {
   setupAudio();
 });
 
 async function setupAudio() {
-  synth = new Tone.Synth().toDestination();
+  synth = new Tone.PolySynth().toDestination();
   analyser = new Tone.Analyser("fft", 4096);
 
   synth.connect(analyser);
