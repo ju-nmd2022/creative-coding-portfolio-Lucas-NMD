@@ -2,7 +2,7 @@ let analyser;
 let isPlaying = false;
 let notes = ["C4", "E4", "G4", "C5", "E5", "G4", "C5", "E5", "C4", "E4", "G4", "C5", "E5", "G4", "C5", "E5","C4", "D4", "A4", "D5", "F5", "A4", "D5", "F5", "C4", "D4", "A4", "D5", "F5", "A4", "D5", "F5"];
 let durations = ["8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n"];
-let pedalNotes = ["C3","C3","D3","D3"];
+let pedalNotes = ["C2","C2","D2","D2"];
 let pedalDurations = ["1n", "1n", "1n", "1n"];
 let currentNote = 0;
 let pedalInterval;
