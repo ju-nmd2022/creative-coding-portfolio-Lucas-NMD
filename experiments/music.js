@@ -51,6 +51,10 @@ function preload() {
     baseUrl: "https://tonejs.github.io/audio/salamander/"
   }).toDestination();
 }
+function setup() {
+  createCanvas(window.innerWidth, window.innerHeight);
+  noStroke();
+}
 
 async function setupAudio() {
   analyser = new Tone.Analyser("fft", 4096);
@@ -104,12 +108,9 @@ function playNextNote() {
     currentNote = 0;
     isPlaying = false;
     clearInterval(pedalInterval);
+  }
 }
 
-function setup() {
-  createCanvas(window.innerWidth, window.innerHeight);
-  noStroke();
-}
 
 function draw() {
   background(255);
