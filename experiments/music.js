@@ -12,6 +12,7 @@ window.addEventListener("load", () => {
 });
 
 let piano;
+let synth = new Tone.PolySynth().toDestination();
 
 function preload() {
   piano = new Tone.Sampler({
@@ -51,6 +52,8 @@ function preload() {
     baseUrl: "https://tonejs.github.io/audio/salamander/"
   }).toDestination();
 }
+
+
 function setup() {
   createCanvas(window.innerWidth, window.innerHeight);
   noStroke();
@@ -84,7 +87,7 @@ function playPedalNotes() {
     if (index < pedalNotes.length) {
       let note = pedalNotes[index];
       let duration = pedalDurations[index];
-      piano.triggerAttackRelease(note, duration);
+      synth.triggerAttackRelease(note, duration);
       index++;
       setTimeout(playNextPedalNote, Tone.Time(duration).toMilliseconds());
     }
