@@ -12,7 +12,7 @@ window.addEventListener("load", () => {
 });
 
 let piano;
-let synth = new Tone.PolySynth().toDestination();
+let synth = new Tone.Synth().toDestination();
 
 function preload() {
   piano = new Tone.Sampler({
@@ -84,12 +84,16 @@ function playPedalNotes() {
   let index = 0;
 
   function playNextPedalNote() {
-    if (index < pedalNotes.length) {
+    if (isPlaying && index < pedalNotes.length) {
       let note = pedalNotes[index];
       let duration = pedalDurations[index];
       synth.triggerAttackRelease(note, duration);
       index++;
       setTimeout(playNextPedalNote, Tone.Time(duration).toMilliseconds());
+    } else if (index >= pedalNotes.length) {
+      index = 0;
+      isPlaying = false;
+      clearInterval(pedalInterval);
     }
   }
 
