@@ -1,4 +1,7 @@
-let analyser;
+let cols, rows;
+let grid;
+let nextGrid;
+let cellSize = 10;
 let isPlaying = false;
 let notes = ["C4", "E4", "G4", "C5", "E5", "G4", "C5", "E5", "C4", "E4", "G4", "C5", "E5", "G4", "C5", "E5","C4", "D4", "A4", "D5", "F5", "A4", "D5", "F5", "C4", "D4", "A4", "D5", "F5", "A4", "D5", "F5", "B3", "D4", "G4", "D5", "F5", "G4", "D5", "F5", "B3", "D4", "G4", "D5", "F5", "G4", "D5", "F5", "C4", "E4", "G4", "C5", "E5", "G4", "C5", "E5", "C4", "E4", "G4", "C5", "E5", "G4", "C5", "E5", "C4", "E4", "A4", "E5", "A5","A4", "E5", "A5", "C4", "E4", "A4", "E5", "A5","A4", "E5", "A5", "C4", "D4", "F#4", "A4", "D5", "F#4", "A4", "D5", "C4", "D4", "F#4", "A4", "D5", "F#4", "A4", "D5", "B3", "D4", "G4", "D5", "G5", "G4", "D5", "G5", "B3", "D4", "G4", "D5", "G5", "G4", "D5", "G5", "B3", "C4", "E4", "G4", "C5", "E4", "G4", "C5", "B3", "C4", "E4", "G4", "C5", "E4", "G4", "C5", "A3", "C4", "E4", "G4", "C5", "E4", "G4", "C5", "A3", "C4", "E4", "G4", "C5", "E4", "G4", "C5"];
 let durations = ["8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n", "8n"];
@@ -56,14 +59,15 @@ function preload() {
 
 function setup() {
   createCanvas(window.innerWidth, window.innerHeight);
-  noStroke();
+  cols = floor(width / cellSize);
+  rows = floor(height / cellSize);
+  grid = makeGrid(cols, rows);
+  nextGrid = makeGrid(cols, rows);
+  randomizeGrid();
 }
 
 async function setupAudio() {
-  analyser = new Tone.Analyser("fft", 4096);
-
-  piano.connect(analyser);
-
+  
   await Tone.start();
   console.log("Tone.js started!");
 }
@@ -77,8 +81,33 @@ window.addEventListener("click", async () => {
     isPlaying = false;
     currentNote = 0;
     clearInterval(pedalInterval);
+    clearGrid();
   }
 });
+
+function makeGrid(cols, rows) {
+  let arr = new Array(cols);
+  for (let i = 0; i < cols; i++) {
+    arr[i] = new Array(rows).fill(0);
+  }
+  return arr;
+}
+
+function randomizeGrid() {
+  for (let x = 0; x < cols; x++) {
+    for (let y = 0; y < rows; y++) {
+      grid[x][y] = random() > 0.85 ? 1 : 0;
+    }
+  }
+}
+
+function clearGrid() {
+  for (let x = 0; x < cols; x++) {
+    for (let y = 0; y < rows; y++) {
+      grid[x][y] = 0;
+    }
+  }
+}
 
 function playPedalNotes() {
   let index = 0;
@@ -89,6 +118,9 @@ function playPedalNotes() {
       let duration = pedalDurations[index];
       synth.triggerAttackRelease(note, duration);
       index++;
+      let x = floor(random(cols));
+      let y = floor(random(rows));
+      grid[x][y] = 1;
       setTimeout(playNextPedalNote, Tone.Time(duration).toMilliseconds());
     } else if (index >= pedalNotes.length) {
       index = 0;
@@ -109,6 +141,9 @@ function playNextNote() {
     piano.triggerAttackRelease(note, duration);
 
     currentNote++;
+    let x = floor(random(cols));
+    let y = floor(random(rows));
+    grid[x][y] = 1;
 
     setTimeout(playNextNote, Tone.Time(duration).toMilliseconds());
   } else if (currentNote >= notes.length) {
@@ -118,16 +153,44 @@ function playNextNote() {
   }
 }
 
+function computeNextGen() {
+  for (let x = 0; x < cols; x++) {
+    for (let y = 0; y < rows; y++) {
+      let state = grid[x][y];
+      let neighbors = countNeighbors(grid, x, y);
+      if (state == 0 && neighbors == 3) nextGrid[x][y] = 1;
+      else if (state == 1 && (neighbors < 2 || neighbors > 3)) nextGrid[x][y] = 0;
+      else nextGrid[x][y] = state;
+    }
+  }
+  [grid, nextGrid] = [nextGrid, grid];
+}
+
+function countNeighbors(grid, x, y) {
+  let sum = 0;
+  for (let i = -1; i <= 1; i++) {
+    for (let j = -1; j <= 1; j++) {
+      let col = (x + i + cols) % cols;
+      let row = (y + j + rows) % rows;
+      sum += grid[col][row];
+    }
+  }
+  sum -= grid[x][y];
+  return sum;
+}
+
 
 function draw() {
-  background(255);
-
-  let value = analyser.getValue();
-
-  for (let i = 0; i < value.length; i++) {
-    let amplitude = map(value[i], -100, 0, height, 0);
-    fill(map(i, 0, value.length, 0, 255), 100, 150);
-    rect(i * (width / value.length), height - amplitude, (width / value.length), amplitude);
+  background(0);
+  computeNextGen();
+  for (let x = 0; x < cols; x++) {
+    for (let y = 0; y < rows; y++) {
+      if (grid[x][y] == 1) {
+        fill(255, 100, 150);
+        noStroke();
+        rect(x * cellSize, y * cellSize, cellSize, cellSize);
+      }
+    }
   }
 }
 
